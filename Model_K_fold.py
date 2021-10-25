@@ -19,7 +19,7 @@ import itertools
 from sklearn.metrics import make_scorer, accuracy_score, precision_score, recall_score, f1_score
 
 scoring = {'accuracy' : make_scorer(accuracy_score), 
-           'precision' : make_scorer(precision_score),
+           'precision' : make_scorer(precision_score),  
            'recall' : make_scorer(recall_score), 
            'f1_score' : make_scorer(f1_score)}
 
@@ -91,24 +91,25 @@ keys=list(scores.keys())
 #for i in range(len(scores)):
 for i in range(len(scores)):
     print(keys[i]+" mean : "+str(scores[keys[i]].mean()))
-#%%
+#%%MAIN CODE
 for i in features_combination:
     print(str(i)+'BEGIN:')
     X=data[i]
-    scores=kfold_scores(SVM,X,y)
+    scores=kfold_scores(neural_net,X,y)
     keys=list(scores.keys())
-    results_df_2 = pd.DataFrame(data=[["SVM", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100,i]], 
+    results_df_2 = pd.DataFrame(data=[["Neural Network", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100,i]], 
                           columns=['Model', 'Accuracy mean %', 
                                    'Precision mean %','Recall mean %','F1 Score mean %','Features'])
     results_df = results_df.append(results_df_2, ignore_index=True)    
 #%%
 results_df.to_csv('heart_result.csv')
-#%%
+
+#%%------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 for i in models.keys():
     print(i+'BEGIN:')
     scores=kfold_scores(models[i],X,y)
     keys=list(scores.keys())
-    results_df_2 = pd.DataFrame(data=[["SVM", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100]], 
+    results_df_2 = pd.DataFrame(data=[["Logistic Regression", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100]], 
                           columns=['Model', 'Accuracy mean %', 
                                    'Precision mean %','Recall mean %','F1 Score mean %'])
     results_df = results_df.append(results_df_2, ignore_index=True)

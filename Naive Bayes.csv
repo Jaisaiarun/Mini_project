@@ -8099,3 +8099,4 @@
 8097,Naive Bayes,80.5839822,81.49191606,83.75,82.47454862,"['age', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
 8098,Naive Bayes,81.85279941,82.87659099,84.88970588,83.66562001,"['sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
 8099,Naive Bayes,81.84130515,82.67451718,84.88970588,83.58871276,"['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
+,,77.13502021,78.45575634,80.98117284,79.36741658,
