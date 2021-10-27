@@ -52,7 +52,7 @@ features_combination=column_combination(features)
 #    print(i)
 print("Length Of combinations : ",len(features_combination))    
 #%%
-print(features_combination[0])
+print(features_combination)
 #%%
 X_features=data[features_combination[3]]
 print(features_combination[3])
@@ -84,71 +84,131 @@ models={'KNN':knn,'Naive Bayes':gnb,'Decision Tree':tree,
 results_df = pd.DataFrame(columns=['Model', 'Accuracy mean %', 
                                    'Precision mean %','Recall mean %','F1 Score mean %','Features'])
 #%%
-#TESTING CODE
-scores=kfold_scores(vote,X,y)
-
-keys=list(scores.keys())
+##TESTING CODE
+#scores=kfold_scores(vote,X,y)
+#
+#keys=list(scores.keys())
+##for i in range(len(scores)):
 #for i in range(len(scores)):
-for i in range(len(scores)):
-    print(keys[i]+" mean : "+str(scores[keys[i]].mean()))
+#    print(keys[i]+" mean : "+str(scores[keys[i]].mean()))
 #%%MAIN CODE
 for i in features_combination:
     print(str(i)+'BEGIN:')
     X=data[i]
-    scores=kfold_scores(neural_net,X,y)
+    scores=kfold_scores(logreg,X,y)
     keys=list(scores.keys())
-    results_df_2 = pd.DataFrame(data=[["Neural Network", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100,i]], 
+    results_df_2 = pd.DataFrame(data=[["Logestic Regression", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100,i]], 
                           columns=['Model', 'Accuracy mean %', 
                                    'Precision mean %','Recall mean %','F1 Score mean %','Features'])
     results_df = results_df.append(results_df_2, ignore_index=True)    
 #%%
 results_df.to_csv('heart_result.csv')
-
-#%%------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-for i in models.keys():
-    print(i+'BEGIN:')
-    scores=kfold_scores(models[i],X,y)
-    keys=list(scores.keys())
-    results_df_2 = pd.DataFrame(data=[["Logistic Regression", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100]], 
-                          columns=['Model', 'Accuracy mean %', 
-                                   'Precision mean %','Recall mean %','F1 Score mean %'])
-    results_df = results_df.append(results_df_2, ignore_index=True)
-#%%
-results_df.to_csv('heart_result.csv')
 #%%
 results_df = pd.DataFrame(columns=['Model', 'Accuracy mean %', 
-                                   'Precision mean %','Recall mean %','F1 Score mean %'])
+                                   'Precision mean %','Recall mean %','F1 Score mean %','Features'])
+#%%
+significant_features=['sex', 'cp', 
+                       'fbs', 'restecg', 
+                      'exang', 'oldpeak', 
+                      'slope', 'ca', 'thal']
+found_significant_features=['sex', 'cp', 
+                        'restecg', 
+                      'oldpeak', 
+                      'slope', 'ca', 'thal']
+#print(features)
+y=data['target']
+X=data[features]
+
+significant_features_list=[significant_features,found_significant_features,features]
+#%%
+
+for i in significant_features_list:
+    print(str(i)+'BEGIN:')
+    X=data[i]
+    scores=kfold_scores(vote,X,y)
+    keys=list(scores.keys())
+    results_df_2 = pd.DataFrame(data=[["Vote", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100,i]], 
+                          columns=['Model', 'Accuracy mean %', 
+                                   'Precision mean %','Recall mean %','F1 Score mean %','Features'])
+    results_df = results_df.append(results_df_2, ignore_index=True)    
+#%%
+results_df = pd.DataFrame(columns=['Model', 'Accuracy mean %', 
+                                   'Precision mean %','Recall mean %','F1 Score mean %','Features'])
+
+dt = pd.read_csv("Decision Tree.csv",index_col=0)
+dt=dt.dropna()
+results_df = results_df.append(dt, ignore_index=True)  
+
+nb = pd.read_csv("Naive Bayes.csv",index_col=0)
+nb=nb.dropna()
+results_df = results_df.append(nb, ignore_index=True)    
+
+sv = pd.read_csv("SVM.csv",index_col=0)
+sv=sv.dropna()
+results_df = results_df.append(sv, ignore_index=True)    
+
+KN = pd.read_csv("KNN.csv",index_col=0)
+KK=KN.dropna()
+results_df = results_df.append(KN, ignore_index=True)    
+
+lgr = pd.read_csv("Logestic Regression.csv",index_col=0)
+lgr=lgr.dropna()
+results_df = results_df.append(lgr, ignore_index=True)    
+
+nn = pd.read_csv("Neural Network.csv",index_col=0)
+nn=nn.dropna()
+results_df = results_df.append(nn, ignore_index=True)    
+
+v = pd.read_csv("Vote.csv",index_col=0)
+v=v.dropna()
+results_df = results_df.append(v, ignore_index=True)    
+
+results_df.to_csv('Final_result.csv')
+#%%------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#for i in models.keys():
+#    print(i+'BEGIN:')
+#    scores=kfold_scores(models[i],X,y)
+#    keys=list(scores.keys())
+#    results_df_2 = pd.DataFrame(data=[["Logistic Regression", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100]], 
+#                          columns=['Model', 'Accuracy mean %', 
+#                                   'Precision mean %','Recall mean %','F1 Score mean %'])
+#    results_df = results_df.append(results_df_2, ignore_index=True)
+##%%
+#results_df.to_csv('heart_result.csv')
+##%%
+#results_df = pd.DataFrame(columns=['Model', 'Accuracy mean %', 
+#                                   'Precision mean %','Recall mean %','F1 Score mean %'])
 #results_df.head()
 #%%
 #CHOOSING K VALUE
-accuracy_rate = []
-for i in range(1,40):
-    
-    knn = KNeighborsClassifier(n_neighbors=i)
-    cv = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
-    score=cross_val_score(knn,X,y,cv=cv)
-    accuracy_rate.append(score.mean())
-
-plt.figure(figsize=(10,6))
-plt.plot(range(1,40),accuracy_rate,color='green', linestyle='dashed', marker='o',
-         markerfacecolor='blue', markersize=10)
-plt.title('Accuracy Rate vs. K Value')
-plt.xticks(np.arange(1,40,1))
-plt.xlabel('K')
-plt.ylabel('Accuracy Rate')
-#%%
-#CHOOSING depth VALUE for Random tree
-accuracy_rate = []
-for i in range(1,40):
-    tree=DecisionTreeClassifier(max_depth=i)
-    cv = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
-    score=cross_val_score(tree,X,y,cv=cv)
-    accuracy_rate.append(score.mean())
-
-plt.figure(figsize=(10,6))
-plt.plot(range(1,40),accuracy_rate,color='green', linestyle='dashed', marker='o',
-         markerfacecolor='blue', markersize=10)
-plt.title('Accuracy Rate vs. Depth')
-plt.xticks(np.arange(1,40,1))
-plt.xlabel('Depth')
-plt.ylabel('Accuracy Rate')
+#accuracy_rate = []
+#for i in range(1,40):
+#    
+#    knn = KNeighborsClassifier(n_neighbors=i)
+#    cv = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
+#    score=cross_val_score(knn,X,y,cv=cv)
+#    accuracy_rate.append(score.mean())
+#
+#plt.figure(figsize=(10,6))
+#plt.plot(range(1,40),accuracy_rate,color='green', linestyle='dashed', marker='o',
+#         markerfacecolor='blue', markersize=10)
+#plt.title('Accuracy Rate vs. K Value')
+#plt.xticks(np.arange(1,40,1))
+#plt.xlabel('K')
+#plt.ylabel('Accuracy Rate')
+##%%
+##CHOOSING depth VALUE for Random tree
+#accuracy_rate = []
+#for i in range(1,40):
+#    tree=DecisionTreeClassifier(max_depth=i)
+#    cv = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
+#    score=cross_val_score(tree,X,y,cv=cv)
+#    accuracy_rate.append(score.mean())
+#
+#plt.figure(figsize=(10,6))
+#plt.plot(range(1,40),accuracy_rate,color='green', linestyle='dashed', marker='o',
+#         markerfacecolor='blue', markersize=10)
+#plt.title('Accuracy Rate vs. Depth')
+#plt.xticks(np.arange(1,40,1))
+#plt.xlabel('Depth')
+#plt.ylabel('Accuracy Rate')
