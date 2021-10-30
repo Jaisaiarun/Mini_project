@@ -1,0 +1,9 @@
+Model,Precision,Features
+Vote,87.68802521,"['sex', 'cp', 'trestbps', 'restecg', 'oldpeak', 'slope', 'ca', 'thal']"
+Decision Tree,88.16899767,"['age', 'sex', 'cp']"
+Decision Tree,88.16899767,"['age', 'sex', 'cp', 'restecg']"
+Logistic Regression,85.49112643,"['sex', 'cp', 'trestbps', 'fbs', 'restecg', 'thalach', 'oldpeak', 'ca', 'thal']"
+Naive Bayes,85.11235905,"['sex', 'cp', 'trestbps', 'thal']"
+KNN,87.66529304,"['sex', 'cp', 'slope']"
+SVM,84.51251122,"['sex', 'cp', 'slope', 'ca', 'thal']"
+Neural Network,86.03716871,"['sex', 'cp', 'fbs', 'slope']"

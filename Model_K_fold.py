@@ -1,7 +1,4 @@
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns 
 #%%
 from sklearn.model_selection import StratifiedKFold, KFold
 from sklearn.model_selection import cross_val_score
@@ -9,7 +6,7 @@ from sklearn.model_selection import cross_validate #for setting multiple metrics
 from sklearn.naive_bayes import GaussianNB #Naive Bayes
 from sklearn.linear_model import LogisticRegression 
 from sklearn.neural_network import MLPClassifier 
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier #VOTE
+from sklearn.ensemble import VotingClassifier #VOTE
 from sklearn import svm
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -45,18 +42,16 @@ X=data.drop('target',1)
 features=list(X.columns)
 print("Features ARE : ",features)
 #%%
-print(features[2:])
-#%%
 features_combination=column_combination(features)
 #for i in features_combination:
 #    print(i)
+
+print(features_combination)
 print("Length Of combinations : ",len(features_combination))    
 #%%
-print(features_combination)
-#%%
-X_features=data[features_combination[3]]
-print(features_combination[3])
-print(X_features.head())
+#X_features=data[features_combination[3]]
+#print(features_combination[3])
+#print(X_features.head())
 #%%
 def kfold_scores(clf,X,y):
     cv = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
@@ -64,18 +59,21 @@ def kfold_scores(clf,X,y):
     return scores
 
 #%%
+#scores=kfold_scores(gnb,X,y)
+#keys=list(scores.keys())
+#print(scores[keys[2]].mean()*100)
+#%%
 #MODELS
 SVM = svm.SVC(kernel='linear', C=1, random_state=1)
 knn = KNeighborsClassifier(n_neighbors=21)
-tree=DecisionTreeClassifier(max_depth=3)
+tree = DecisionTreeClassifier(max_depth=3)
 gnb = GaussianNB()
 logreg = LogisticRegression(solver='liblinear',random_state=1)
 neural_net = MLPClassifier()
 clf1 = LogisticRegression(solver='liblinear',random_state=1)
-clf2 = RandomForestClassifier(n_estimators=50, random_state=1)
-clf3 = GaussianNB()
+clf2 = GaussianNB()
 #vote = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3)], voting='hard')
-vote = VotingClassifier(estimators=[('lr', clf1),  ('gnb', clf3)], voting='hard')
+vote = VotingClassifier(estimators=[('lr', clf1),  ('gnb', clf2)], voting='hard')
 
 models={'KNN':knn,'Naive Bayes':gnb,'Decision Tree':tree,
         'Logistic Regression':logreg,'Vote':vote,
@@ -85,12 +83,12 @@ results_df = pd.DataFrame(columns=['Model', 'Accuracy mean %',
                                    'Precision mean %','Recall mean %','F1 Score mean %','Features'])
 #%%
 ##TESTING CODE
-#scores=kfold_scores(vote,X,y)
-#
-#keys=list(scores.keys())
-##for i in range(len(scores)):
+scores=kfold_scores(logreg,X,y)
+
+keys=list(scores.keys())
 #for i in range(len(scores)):
-#    print(keys[i]+" mean : "+str(scores[keys[i]].mean()))
+for i in range(len(scores)):
+    print(keys[i]+" mean : "+str(scores[keys[i]].mean()))
 #%%MAIN CODE
 for i in features_combination:
     print(str(i)+'BEGIN:')
@@ -102,8 +100,10 @@ for i in features_combination:
                                    'Precision mean %','Recall mean %','F1 Score mean %','Features'])
     results_df = results_df.append(results_df_2, ignore_index=True)    
 #%%
-results_df.to_csv('heart_result.csv')
+results_df.to_csv('Logestic Regression.csv')
 #%%
+#%%
+
 results_df = pd.DataFrame(columns=['Model', 'Accuracy mean %', 
                                    'Precision mean %','Recall mean %','F1 Score mean %','Features'])
 #%%
@@ -165,20 +165,22 @@ results_df = results_df.append(v, ignore_index=True)
 
 results_df.to_csv('Final_result.csv')
 #%%------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#for i in models.keys():
-#    print(i+'BEGIN:')
-#    scores=kfold_scores(models[i],X,y)
-#    keys=list(scores.keys())
-#    results_df_2 = pd.DataFrame(data=[["Logistic Regression", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100]], 
-#                          columns=['Model', 'Accuracy mean %', 
-#                                   'Precision mean %','Recall mean %','F1 Score mean %'])
-#    results_df = results_df.append(results_df_2, ignore_index=True)
-##%%
-#results_df.to_csv('heart_result.csv')
-##%%
-#results_df = pd.DataFrame(columns=['Model', 'Accuracy mean %', 
-#                                   'Precision mean %','Recall mean %','F1 Score mean %'])
-#results_df.head()
+
+#%%
+for i in models.keys():
+    print(i+'BEGIN:')
+    scores=kfold_scores(models[i],X,y)
+    keys=list(scores.keys())
+    results_df_2 = pd.DataFrame(data=[["Logistic Regression", scores[keys[2]].mean()*100, scores[keys[3]].mean()*100,scores[keys[4]].mean()*100,scores[keys[5]].mean()*100]], 
+                          columns=['Model', 'Accuracy mean %', 
+                                   'Precision mean %','Recall mean %','F1 Score mean %'])
+    results_df = results_df.append(results_df_2, ignore_index=True)
+#%%
+results_df.to_csv('heart_result.csv')
+#%%
+results_df = pd.DataFrame(columns=['Model', 'Accuracy mean %', 
+                                   'Precision mean %','Recall mean %','F1 Score mean %'])
+results_df.head()
 #%%
 #CHOOSING K VALUE
 #accuracy_rate = []
