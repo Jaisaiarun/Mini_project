@@ -1,0 +1,13 @@
+,Model,Accuracy mean %,Precision mean %,Recall mean %,F1 Score mean %,Features
+6,Vote,85.92592593,87.80788656,80,83.21511387,"['sex', 'cp', 'fbs', 'restecg', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
+7,Vote,85.18518519,87.02156177,79.16666667,82.3397892,"['sex', 'cp', 'fbs', 'restecg', 'exang', 'oldpeak', 'thalach', 'ca', 'thal']"
+10,SVM,85.18518519,87.05605506,80.83333333,82.19757524,"['sex', 'cp', 'fbs', 'restecg', 'exang', 'oldpeak', 'thalach', 'ca', 'thal']"
+1,Naive Bayes,84.92592593,85.35897436,83.33333333,83.94778555,"['sex', 'cp', 'fbs', 'restecg', 'exang', 'oldpeak', 'thalach', 'ca', 'thal']"
+4,Logistic Regression,84.81481481,85.68202631,80.83333333,82.46238544,"['sex', 'cp', 'fbs', 'restecg', 'exang', 'oldpeak', 'thalach', 'ca', 'thal']"
+0,Naive Bayes,84.07407407,83.07548008,81.66666667,81.80591389,"['sex', 'cp', 'fbs', 'restecg', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
+8,Vote,84.07407407,85.59324009,77.5,81.03630717,"['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
+3,Logistic Regression,83.7037037,83.06510157,80,81.00944997,"['sex', 'cp', 'fbs', 'restecg', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
+2,Naive Bayes,83.33333333,83.09235209,79.16666667,80.67587002,"['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
+5,Logistic Regression,83.33333333,83.04478854,79.16666667,80.78235533,"['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
+9,SVM,83.33333333,84.26748252,78.33333333,80.46564193,"['sex', 'cp', 'fbs', 'restecg', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
+11,SVM,82.59259259,82.18559219,78.33333333,79.81510084,"['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']"
