@@ -50,7 +50,7 @@ features_combination=column_combination(features)
 print("Combinations of features :\n",features_combination)
 print("Length Of combinations : ",len(features_combination))        
 #%% Building Models
-SVM = svm.SVC(kernel='linear', C=1)
+SVM = svm.SVC(kernel='linear')
 knn = KNeighborsClassifier(n_neighbors=21)
 tree = DecisionTreeClassifier(max_depth=3)
 gnb = GaussianNB()
@@ -68,7 +68,7 @@ models={'KNN':knn,'Naive Bayes':gnb,'Decision Tree':tree,
 results_df = pd.DataFrame(columns=['Model', 'Accuracy mean %', 
                                    'Precision mean %','Recall mean %','F1 Score mean %','Features'])
 
-model_name='Neural Network' #Change Model name to implement other models
+model_name='Naive Bayes' #Change Model name to implement other models
 for i in features_combination:
     print(str(i)+'BEGIN:')
     X=data[i]

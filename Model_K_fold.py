@@ -214,3 +214,14 @@ results_df.head()
 #plt.xticks(np.arange(1,40,1))
 #plt.xlabel('Depth')
 #plt.ylabel('Accuracy Rate')
+#%%
+from sklearn.model_selection import GridSearchCV
+model = LinearSVC()
+model.fit(X_train,y_train)
+model.score(X_test,y_test)
+params = {'C' : [0.01,0.1,0.25,0.5,0.75,1,10,100],
+         'gamma' : [1,0.75,0.5,0.25,0.1,0.01,0.001],
+         'kernel': ['rbf','poly','linear']}
+gridsearch = GridSearchCV(SVC(),params,refit=True)
+gridsearch.fit(X_train,y_train)
+print(gridsearch.best_params_)
