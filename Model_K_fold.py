@@ -215,13 +215,22 @@ results_df.head()
 #plt.xlabel('Depth')
 #plt.ylabel('Accuracy Rate')
 #%%
+data = pd.read_csv("processedDataset.csv")
+y=data['num']
+X=data.drop('num',1)
+
+features=list(X.columns)
+
+print("Features ARE : ",features)
+#%%
 from sklearn.model_selection import GridSearchCV
-model = LinearSVC()
-model.fit(X_train,y_train)
-model.score(X_test,y_test)
+model = svm.SVC()
+model.fit(X,y)
+model.score(X,y)
+#%%
 params = {'C' : [0.01,0.1,0.25,0.5,0.75,1,10,100],
-         'gamma' : [1,0.75,0.5,0.25,0.1,0.01,0.001],
+         'gamma' : ['auto','scale'],
          'kernel': ['rbf','poly','linear']}
-gridsearch = GridSearchCV(SVC(),params,refit=True)
-gridsearch.fit(X_train,y_train)
+gridsearch = GridSearchCV(model,params,refit=True)
+gridsearch.fit(X,y)
 print(gridsearch.best_params_)

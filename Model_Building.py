@@ -58,7 +58,7 @@ logreg = LogisticRegression(solver='liblinear')
 neural_net = MLPClassifier()
 clf1 = LogisticRegression(solver='liblinear')
 clf2 = GaussianNB()
-vote = VotingClassifier(estimators=[('lr', clf1),  ('gnb', clf2)], voting='hard')
+vote = VotingClassifier(estimators=[('lr', clf1),  ('gnb', clf2)])
 
 models={'KNN':knn,'Naive Bayes':gnb,'Decision Tree':tree,
         'Logistic Regression':logreg,'Vote':vote,
@@ -81,15 +81,16 @@ for i in features_combination:
 #%%    
 results_df.to_csv(str(model_name)+'.csv')
 #%% TRAIL
-#%%TESTING EACH MODEL
-#X=data.drop('num',1)
-#['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']
-f=['sex', 'restecg', 'exang']
-for i in range(1,40):
-    tree = DecisionTreeClassifier(max_depth=i)
-    X=data[f]
-    scores=kfold_scores(tree,X,y)
-    keys=list(scores.keys())
-    if scores[keys[3]].mean()*100>80:    
-        for i in range(len(scores)):
-            print(keys[i]+" mean : "+str(scores[keys[i]].mean()*100))
+#%%FINDING THE OPTIMAL VALUE
+##X=data.drop('num',1)
+##['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']
+#f=['sex', 'restecg', 'exang']
+#for i in range(1,40):
+#    tree = DecisionTreeClassifier(max_depth=i)
+#    X=data[f]
+#    scores=kfold_scores(tree,X,y)
+#    keys=list(scores.keys())
+#    if scores[keys[3]].mean()*100>80:    
+#        for i in range(2,len(scores)):
+#            print(keys[i]+" mean : "+str(scores[keys[i]].mean()*100))
+#        print("-----")
