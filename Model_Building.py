@@ -10,7 +10,7 @@ from sklearn.ensemble import VotingClassifier #VOTE
 from sklearn import svm
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
-import itertools
+import itertools #for finding all the combinations
 from sklearn.metrics import make_scorer, accuracy_score, precision_score, recall_score, f1_score
 
 scoring = {'accuracy' : make_scorer(accuracy_score), 
@@ -78,7 +78,7 @@ for i in features_combination:
                           columns=['Model', 'Accuracy mean %', 
                                    'Precision mean %','Recall mean %','F1 Score mean %','Features'])
     results_df = results_df.append(results_df_2, ignore_index=True)    
-#%%    
+
 results_df.to_csv(str(model_name)+'.csv')
 #%% TRAIL
 #%%FINDING THE OPTIMAL VALUE
